@@ -6,6 +6,8 @@ The project consists of a toy car that, when placed in the general direction of 
 
 ## General Description
 
+![general description](./images/general-description.svg)
+
 ## Hardware Design
 
 ## Software Design
