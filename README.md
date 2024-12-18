@@ -32,6 +32,9 @@ Roluri Pini:
 - A0: Primeste semnalul de echo de la senzorul ultrasonic din stanga.
 - A1: Primeste semnalul de echo de la senzorul ultrasonic din dreapta.
 
+![design-front](./images/design-front.jpeg)
+![design-back](./images/design-back.jpeg)
+![design-top](./images/design-top.jpeg)
 
 ## Software Design
 
