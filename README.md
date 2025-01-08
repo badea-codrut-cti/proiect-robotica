@@ -50,6 +50,8 @@ Those results are stored in two global variables and are later processed in a fu
 
 The car is able to steer itself into the parking space, but in a situation where the car is surrounded by three obstacles and an entrance, it might misidentify which one of the three obstacles is the wall and which ones are the adjacent cars if the steering angle is heavily skewed towards one of the parked cars. This can cause a situation where the car is parked sideways on its lot.
 
+https://github.com/user-attachments/assets/35ce2e0a-f27a-4493-b056-790f85273674
+
 ## Conclusion
 
 The project offered me the opportunity to apply my 3D modeling knowledge in order to create the designs for the steering system, chassis and back axle. It also served as an opportunity to use programming as a means to solving a real world issue.
