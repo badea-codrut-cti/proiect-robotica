@@ -38,9 +38,21 @@ Roluri Pini:
 
 ## Software Design
 
+Whether parking should start is dictated by a push button whose pin is configured with an interrupt on the falling edge. Debouncing is handled using a variable that keeps track of the last time the button was pressed as a timestamp in milliseconds since the microcontroller has been powered on. If the difference between the current timestamp and the timestamp stored in the variable is below the pre-defined threshold, the button press would be ignored. 
+
+Subsequent button presses would delay when parking initiates, as once the button is pressed, a two second countdown will start before the car begins to park itself.
+
+The source code contains a function for measuring the distance between the frontal sensors and potential obstacles. The function works by sending an input to the `HC-SR04` sensors and waiting for an echo using `pulseIn`. 
+
+Those results are stored in two global variables and are later processed in a function that handles steering. The function first checks if it should proceed with parking (if it is in park mode and if the time between being put in park mode and the current timestamp is greater than two seconds), then it checks if either of the sensors is closer to an obstacle than the stopping threshold, in which case it will end the parking maneuver. If that is not the case, it then checks if the deviation between the distances reported by the two frontal sensors are less than a pre-defined percentage, which would make the car go forward. If the distance is skewed to either direction, the car will steer in the opposite direction to avoid the obstacle.
+
 ## Documented Results
 
+The car is able to steer itself into the parking space, but in a situation where the car is surrounded by three obstacles and an entrance, it might misidentify which one of the three obstacles is the wall and which ones are the adjacent cars if the steering angle is heavily skewed towards one of the parked cars. This can cause a situation where the car is parked sideways on its lot.
+
 ## Conclusion
+
+The project offered me the opportunity to apply my 3D modeling knowledge in order to create the designs for the steering system, chassis and back axle. It also served as an opportunity to use programming as a means to solving a real world issue.
 
 ## Biography
 

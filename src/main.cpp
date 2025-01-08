@@ -3,7 +3,7 @@
 
 float distanceLeft, distanceRight;
 volatile bool shouldPark = false;
-uint32_t lastInterruptTime = 0, parkStartTime = 0;
+volatile uint32_t lastInterruptTime = 0, parkStartTime = 0;
 
 void handleStartButton() {
   uint32_t currentTime = millis();
@@ -56,32 +56,30 @@ void getDistances() {
 }
 
 void handleSteering() {
-  if (millis() < 5000)
-    return;
-  
-  if (min(distanceLeft, distanceRight) < STOPPING_DISTANCE) {
-    digitalWrite(LEFT_MOTOR_POS, LOW);
-    digitalWrite(RIGHT_MOTOR_POS, LOW);
+  if (!shouldPark || parkStartTime < PARKING_COOLDOWN || min(distanceLeft, distanceRight) < STOPPING_DISTANCE) {
+    analogWrite(LEFT_MOTOR_POS, 0);
+    analogWrite(RIGHT_MOTOR_POS, 0);
+    shouldPark = false;
     return;
   }
 
-  if (abs(distanceLeft - distanceRight) < 0.1 * min(distanceLeft, distanceRight)) {
-    digitalWrite(LEFT_MOTOR_POS, HIGH);
-    digitalWrite(RIGHT_MOTOR_POS, HIGH);
+  if (abs(distanceLeft - distanceRight) < MAX_DISTANCE_DEVIATION * min(distanceLeft, distanceRight)) {
+    analogWrite(LEFT_MOTOR_POS, 255);
+    analogWrite(RIGHT_MOTOR_POS, 255);
     return;
   }
 
   bool steerLeft = distanceLeft > distanceRight;
 
-  digitalWrite(LEFT_MOTOR_POS, steerLeft ? HIGH : LOW);
-  digitalWrite(RIGHT_MOTOR_POS, steerLeft ? LOW : HIGH);
+  analogWrite(LEFT_MOTOR_POS, steerLeft ? 255 : 0);
+  analogWrite(RIGHT_MOTOR_POS, steerLeft ? 0 : 255);
 }
 
 void loop() {
   getDistances();
   handleSteering();
-  /*Serial.print(distanceLeft);
+  Serial.print(distanceLeft);
   Serial.print(", ");
-  Serial.println(distanceRight);*/
+  Serial.println(distanceRight);
   delay(20);
 }
