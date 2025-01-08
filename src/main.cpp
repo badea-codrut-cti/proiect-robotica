@@ -2,17 +2,15 @@
 #include "pinmaps.h"
 
 float distanceLeft, distanceRight;
-volatile bool shouldPark = false;
 volatile uint32_t lastInterruptTime = 0, parkStartTime = 0;
 
 void handleStartButton() {
   uint32_t currentTime = millis();
 
-  if (currentTime - lastInterruptTime >= DEBOUNCE_DELAY) {
-    lastInterruptTime = currentTime;
-    shouldPark = !shouldPark;
-    parkStartTime = millis();
-  }
+  if (currentTime - lastInterruptTime < DEBOUNCE_DELAY) 
+    return;
+
+  lastInterruptTime = parkStartTime = currentTime;
 }
 
 void setup() {
@@ -56,10 +54,9 @@ void getDistances() {
 }
 
 void handleSteering() {
-  if (!shouldPark || parkStartTime < PARKING_COOLDOWN || min(distanceLeft, distanceRight) < STOPPING_DISTANCE) {
+  if (millis() - parkStartTime < PARKING_COOLDOWN || min(distanceLeft, distanceRight) < STOPPING_DISTANCE) {
     analogWrite(LEFT_MOTOR_POS, 0);
     analogWrite(RIGHT_MOTOR_POS, 0);
-    shouldPark = false;
     return;
   }
 
