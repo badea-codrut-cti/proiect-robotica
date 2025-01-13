@@ -14,7 +14,7 @@ The project consists of a toy car that, when placed in the general direction of 
 
 Element|Quantity|Source
 ---|---|---
-DC Motor|2|Faculty
+DC Motor|2|Bought
 SR90 Servo|1|Bought
 L298N|1|Bought
 HC-SR04|2|Faculty
@@ -23,14 +23,16 @@ Arduino Uno|1|Faculty
 1.5V Battery|4|Bought
 9V Battery|1|Bought
 
-Roluri Pini:
-- D0: Este conectat la push button-ul care comuta masina intre modul parcare si modul standby.
-- D1: Este conectat la senzorul ultrasonic din dreapta.
-- D4: Este conectat la senzorul ultrasonic din stanga.
-- D6: Comunica prin PWM sa controleze unghiul servomotorului care vireaza axul frontal.
-- D10-D11: Pinii analogici controleaza viteza motoarelor, conectate la puntea H dubla pentru ambele servo-motoare.
-- A0: Primeste semnalul de echo de la senzorul ultrasonic din stanga.
-- A1: Primeste semnalul de echo de la senzorul ultrasonic din dreapta.
+### Pin Objectives
+- `D2`: Connected to the start switch.
+- `D3`: Receives the echo response from the right ultrasonic sensor.
+- `D4`: Receives the echo response from the left ultrasonic sensor.
+- `D8`: Connected to the H-bridge, controls the voltage on the positive terminal of the left DC motor.
+- `D9`: Connected to the H-bridge, controls the voltage on the negative terminal of the left DC motor.
+- `D10`: Connected to the H-bridge, controls the voltage on the positive terminal of the right DC motor.
+- `D11`: Connected to the H-bridge, controls the voltage on the negative terminal of the right DC motor.
+- `D12`: Sends a trigger signal to the right ultrasonic sensor.
+- `D13`: Sends a trigger signal to the left ultrasonic sensor.
 
 ![design-front](./images/design-front.jpeg)
 ![design-back](./images/design-back.jpeg)
